@@ -1,168 +1,250 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HC Barber Services</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #0b0c10; color: #ffffff; display: flex; justify-content: center; min-height: 100vh; }
-        
-        /* Premium Luxury Shell */
-        .phone-container { width: 100%; max-width: 412px; background: #1f2833; min-height: 100vh; box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-bottom: 50px; }
-        
-        /* Top Premium Bar */
-        .lang-bar { display: flex; justify-content: flex-end; padding: 15px 20px; background: #0b0c10; gap: 10px; }
-        .lang-btn { background: transparent; color: #c5a880; border: 1px solid #c5a880; padding: 5px 15px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 12px; transition: 0.3s; }
-        .lang-btn.active { background: #c5a880; color: #0b0c10; border-color: #c5a880; }
+import 'package:flutter/material.dart';
 
-        /* VIP Salon Header */
-        .header { background: #0b0c10; padding: 30px 20px 25px; text-align: center; border-radius: 0 0 25px 25px; border-bottom: 2px solid #c5a880; }
-        .header h1 { font-size: 28px; color: #c5a880; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px; text-transform: uppercase; }
-        .header p { font-size: 13px; color: #66788f; letter-spacing: 0.5px; }
-        
-        /* Sleek Royal Search Bar */
-        .search-container { padding: 20px 20px 5px; }
-        .search-input { width: 100%; padding: 14px 18px; background: #0b0c10; border: 1px solid #c5a880; border-radius: 12px; font-size: 14px; outline: none; color: #ffffff; transition: 0.3s; }
-        .search-input:focus { border-color: #e5cfa1; box-shadow: 0 0 15px rgba(197,168,128,0.3); }
-        
-        .section-title { padding: 25px 20px 12px; font-size: 16px; color: #c5a880; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
-        .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(197,168,128,0.2); }
+void main() {
+  runApp(const SalonHomeServiceApp());
+}
 
-        /* Modern Grid Menu */
-        .menu-list { padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .menu-item { background: #0b0c10; border: 1px solid #1f2833; border-radius: 15px; padding: 16px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .menu-item.selected-menu { border-color: #c5a880; background: rgba(197,168,128,0.08); box-shadow: 0 4px 15px rgba(197,168,128,0.2); }
-        .menu-icon { font-size: 28px; display: block; margin-bottom: 8px; }
-        .menu-name { font-size: 14px; font-weight: 600; color: #ffffff; display: block; margin-bottom: 8px; }
-        .menu-status { font-size: 11px; color: #c5a880; background: rgba(197,168,128,0.1); padding: 4px 10px; border-radius: 20px; display: inline-block; font-weight: 600; }
+class SalonHomeServiceApp extends StatelessWidget {
+  const SalonHomeServiceApp({Key? key}) : super(key: key);
 
-        /* Luxury Catalogue Grid */
-        .catalogue-section { padding: 0 20px 10px; }
-        .category-label { font-size: 13px; font-weight: 600; color: #66788f; margin-bottom: 12px; display: block; }
-        .image-scroll { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
-        .crop-box { height: 180px; border-radius: 16px; overflow: hidden; border: 2px solid #0b0c10; position: relative; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .crop-box img { width: 100%; height: 100%; object-fit: cover; }
-        .crop-box.selected-img { border-color: #c5a880; transform: scale(0.96); box-shadow: 0 0 15px rgba(197,168,128,0.4); }
-        .style-tag { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, #0b0c10); color: #ffffff; font-size: 12px; text-align: center; padding: 25px 10px 10px; font-weight: 600; letter-spacing: 0.5px; }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Ghar Salon Service',
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+        scaffoldBackgroundColor: Colors.grey[100],
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
 
-        /* Premium Form Block */
-        .booking-form { padding: 10px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
-        .input-group { display: flex; flex-direction: column; gap: 6px; }
-        .input-group label { font-size: 13px; color: #66788f; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .input-group input { padding: 14px; border: 1px solid #0b0c10; border-radius: 12px; font-size: 14px; outline: none; background: #0b0c10; color: #ffffff; transition: 0.3s; }
-        .input-group input:focus { border-color: #c5a880; }
-        
-        .contact-note { padding: 15px; font-size: 12px; color: #66788f; line-height: 1.6; background: #0b0c10; margin: 20px; border-radius: 12px; border-left: 3px solid #c5a880; }
-        
-        .btn-submit { background: linear-gradient(135deg, #c5a880, #e5cfa1); color: #0b0c10; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 15px; text-align: center; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(197,168,128,0.3); width: 100%; }
+class SalonService {
+  final String id;
+  final String title;
+  final String description;
+  final String price;
+  final String imageUrl;
+  final String category;
 
-        .rtl { direction: rtl; text-align: right; }
-        .rtl .contact-note { border-left: none; border-right: 3px solid #c5a880; }
-        .rtl .lang-bar { justify-content: flex-start; }
-        .rtl .section-title::after { display: none; }
-        .rtl .section-title::before { content: ''; flex: 1; height: 1px; background: rgba(197,168,128,0.2); }
-    </style>
-</head>
-<body>
+  SalonService({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.imageUrl,
+    required this.category,
+  });
+}
 
-<div class="phone-container" id="appContainer">
-    <div class="lang-bar">
-        <button class="lang-btn active" id="btnEn" onclick="setLanguage('en')">English</button>
-        <button class="lang-btn" id="btnUr" onclick="setLanguage('ur')">اردو</button>
-    </div>
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
-    <div class="header">
-        <h1>HC Barber</h1>
-        <p id="tagline">Premium Haircut & Grooming at Your Doorstep</p>
-    </div>
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-    <div class="search-container">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search styles (Fade, Kids, Beard...)" onkeyup="filterStyles()">
-    </div>
+class _HomeScreenState extends State<HomeScreen> {
+  final List<SalonService> services = [
+    SalonService(
+      id: '1',
+      title: 'Men\'s Hair Trimming & Style',
+      description: 'Modern hair trimming and trendy styling by experts.',
+      price: 'Rs. 500',
+      imageUrl: 'https://unsplash.com',
+      category: 'Adults',
+    ),
+    SalonService(
+      id: '2',
+      title: 'Beard Trimming & Styling',
+      description: 'Sharp beard lining, trimming, and oil treatment.',
+      price: 'Rs. 300',
+      imageUrl: 'https://unsplash.com',
+      category: 'Adults',
+    ),
+    SalonService(
+      id: '3',
+      title: 'Kids Special Haircut',
+      description: 'Gentle and friendly haircut for children below 12 years.',
+      price: 'Rs. 400',
+      imageUrl: 'https://unsplash.com',
+      category: 'Kids',
+    ),
+    SalonService(
+      id: '4',
+      title: 'Senior Citizen Haircut & Shave',
+      description: 'Comfortable, patient, and classic haircut with smooth shave.',
+      price: 'Rs. 600',
+      imageUrl: 'https://unsplash.com',
+      category: 'Senior Citizen',
+    ),
+  ];
 
-    <div class="section-title" id="titleMenu">Select Services</div>
-    <div class="menu-list">
-        <div class="menu-item" onclick="toggleMenuService(this, 'Men\'s Haircut', 'مردوں کی کٹنگ', 1)">
-            <span class="menu-icon">👨</span>
-            <span class="menu-name" id="m1">Men's Haircut</span>
-            <div class="menu-status" id="ms1">Select</div>
-        </div>
-        <div class="menu-item" onclick="toggleMenuService(this, 'Kids\' Haircut', 'بچوں کی کٹنگ', 2)">
-            <span class="menu-icon">👦</span>
-            <span class="menu-name" id="m2">Kids' Haircut</span>
-            <div class="menu-status" id="ms2">Select</div>
-        </div>
-        <div class="menu-item" onclick="toggleMenuService(this, 'Senior Haircut', 'بزرگوں کی کٹنگ', 3)">
-            <span class="menu-icon">👴</span>
-            <span class="menu-name" id="m3">Senior Haircut</span>
-            <div class="menu-status" id="ms3">Select</div>
-        </div>
-        <div class="menu-item" onclick="toggleMenuService(this, 'Beard Grooming / Khat', 'خط / داڑھی ڈیزائننگ', 4)">
-            <span class="menu-icon">🪒</span>
-            <span class="menu-name" id="m4">Beard Grooming</span>
-            <div class="menu-status" id="ms4">Select</div>
-        </div>
-    </div>
+  // Controllers to capture user input
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
 
-    <div class="section-title" id="titleCatalogue">Trending Catalogue</div>
-    
-    <div class="catalogue-section card-item" data-name="men taper fade side part classic buzz cut">
-        <span class="category-label" id="catMen">Men's Style Gallery</span>
-        <div class="image-scroll">
-            <div class="crop-box" onclick="selectStyle(this, 'Men Taper Fade')">
-                <img src="https://pexels.com" alt="Fade">
-                <div class="style-tag">Taper Fade</div>
-            </div>
-            <div class="crop-box" onclick="selectStyle(this, 'Men Side Part')">
-                <img src="https://pexels.com" alt="Side Part">
-                <div class="style-tag">Side Part</div>
-            </div>
-        </div>
-    </div>
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('✂️ Ghar Salon Services', style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: Colors.amber,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Select a Service from Catalogue',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: services.length,
+                itemBuilder: (context, index) {
+                  final service = services[index];
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    elevation: 4,
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                          child: Image.network(
+                            service.imageUrl,
+                            height: 150,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(service.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 5),
+                              Text(service.description),
+                              const SizedBox(height: 5),
+                              Chip(
+                                label: Text(service.category),
+                                backgroundColor: Colors.amber[200],
+                              ),
+                            ],
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(service.price, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16)),
+                              const SizedBox(height: 4),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
+                                onPressed: () {
+                                  _showBookingForm(context, service.title);
+                                },
+                                child: const Text('Book Now', style: TextStyle(color: Colors.black)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-    <div class="contact-note" id="noteText">
-        📢 <strong>Note:</strong> Prices are shared on WhatsApp chat based on your location and exact requirement.
-    </div>
+  // Real-like Booking Form Screen Popup
+  void _showBookingForm(BuildContext context, String serviceTitle) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            top: 20,
+            left: 20,
+            right: 20,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Booking for: $serviceTitle', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber)),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(labelText: 'Your Name', border: OutlineInputBorder()),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _addressController,
+                  maxLines: 2,
+                  decoration: const InputDecoration(labelText: 'Home Address', border: OutlineInputBorder()),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
+                    onPressed: () {
+                      if (_nameController.text.isEmpty || _phoneController.text.isEmpty || _addressController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Please fill all details!'), backgroundColor: Colors.red),
+                        );
+                        return;
+                      }
+                      
+                      String customerName = _nameController.text;
+                      Navigator.pop(context);
+                      
+                      // Clear fields after booking
+                      _nameController.clear();
+                      _phoneController.clear();
+                      _addressController.clear();
 
-    <div class="section-title" id="titleBooking">Secure Booking</div>
-    <form class="booking-form" id="appointmentForm" onsubmit="handleBooking(event)">
-        <div class="input-group">
-            <label id="lblName">Your Full Name</label>
-            <input type="text" id="custName" required>
-        </div>
-        <div class="input-group">
-            <label id="lblPhone">Mobile Number</label>
-            <input type="tel" id="custPhone" placeholder="03xx-xxxxxxx" required>
-        </div>
-        <div class="input-group">
-            <label id="lblAddress">Home Address</label>
-            <input type="text" id="custAddress" required>
-        </div>
-        <div class="input-group">
-            <label id="lblDate">Preferred Date</label>
-            <input type="date" id="bookDate" required>
-        </div>
-        <div class="input-group">
-            <label id="lblTime">Preferred Time</label>
-            <input type="time" id="bookTime" required>
-        </div>
-
-        <button type="submit" class="btn-submit" id="btnBook">Confirm via WhatsApp</button>
-    </form>
-</div>
-
-<script>
-    let currentLang = 'en';
-    let selectedMenuServices = [];
-    let selectedStyles = [];
-
-    const translations = {
-        en: {
-            tagline: "Premium Haircut & Grooming at Your Doorstep",
-            placeholder: "Search styles (Fade, Kids, Beard...)",
-            titleMenu: "Select Services",
-            titleCatalogue: "Trending Catalogue",
-            m1: "Men's Haircut", m2: "Kids' Haircut", m3: "Senior Haircut", m4: "Beard Grooming",
-            
+                      // Success Message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Thank you $customerName! Appointment for $serviceTitle is registered.'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    },
+                    child: const Text('Confirm & Submit', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+      
