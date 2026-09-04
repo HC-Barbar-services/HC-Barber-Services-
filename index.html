@@ -5,57 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HC Barber Services</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #f7f9fa; color: #1a1a1a; display: flex; justify-content: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #0b0c10; color: #ffffff; display: flex; justify-content: center; min-height: 100vh; }
         
-        .phone-container { width: 100%; max-width: 412px; background: #ffffff; min-height: 100vh; box-shadow: 0 4px 30px rgba(0,0,0,0.05); padding-bottom: 40px; }
+        /* Premium Luxury Shell */
+        .phone-container { width: 100%; max-width: 412px; background: #1f2833; min-height: 100vh; box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-bottom: 50px; }
         
-        .lang-bar { display: flex; justify-content: flex-end; padding: 12px 20px; background: #ffffff; gap: 8px; border-bottom: 1px solid #f0f2f5; }
-        .lang-btn { background: transparent; color: #718096; border: 1px solid #e2e8f0; padding: 4px 12px; border-radius: 20px; font-weight: 500; cursor: pointer; font-size: 12px; }
-        .lang-btn.active { background: #1a1a1a; color: #ffffff; border-color: #1a1a1a; }
+        /* Top Premium Bar */
+        .lang-bar { display: flex; justify-content: flex-end; padding: 15px 20px; background: #0b0c10; gap: 10px; }
+        .lang-btn { background: transparent; color: #c5a880; border: 1px solid #c5a880; padding: 5px 15px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 12px; transition: 0.3s; }
+        .lang-btn.active { background: #c5a880; color: #0b0c10; border-color: #c5a880; }
 
-        .header { background: #ffffff; padding: 24px 20px 16px; border-bottom: 1px solid #f0f2f5; }
-        .header h1 { font-size: 24px; color: #1a1a1a; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
-        .header p { font-size: 13px; color: #718096; line-height: 1.4; }
+        /* VIP Salon Header */
+        .header { background: #0b0c10; padding: 30px 20px 25px; text-align: center; border-radius: 0 0 25px 25px; border-bottom: 2px solid #c5a880; }
+        .header h1 { font-size: 28px; color: #c5a880; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px; text-transform: uppercase; }
+        .header p { font-size: 13px; color: #66788f; letter-spacing: 0.5px; }
         
-        .search-container { padding: 16px 20px 8px; }
-        .search-input { width: 100%; padding: 12px 16px; background: #f4f6f8; border: 1px solid transparent; border-radius: 10px; font-size: 14px; outline: none; color: #1a1a1a; }
-        .search-input:focus { background: #ffffff; border-color: #1a1a1a; }
+        /* Sleek Royal Search Bar */
+        .search-container { padding: 20px 20px 5px; }
+        .search-input { width: 100%; padding: 14px 18px; background: #0b0c10; border: 1px solid #c5a880; border-radius: 12px; font-size: 14px; outline: none; color: #ffffff; transition: 0.3s; }
+        .search-input:focus { border-color: #e5cfa1; box-shadow: 0 0 15px rgba(197,168,128,0.3); }
         
-        .section-title { padding: 24px 20px 12px; font-size: 16px; color: #1a1a1a; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        /* Premium Service Menu List */
-        .menu-list { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
-        .menu-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; cursor: pointer; }
-        .menu-item.selected-menu { border-color: #1a1a1a; background: #f1f5f9; }
-        .menu-item-info { display: flex; align-items: center; gap: 10px; }
-        .menu-icon { font-size: 20px; }
-        .menu-name { font-size: 14px; font-weight: 600; }
-        .menu-status { font-size: 11px; color: #718096; border: 1px solid #cbd5e1; padding: 2px 8px; border-radius: 12px; }
+        .section-title { padding: 25px 20px 12px; font-size: 16px; color: #c5a880; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(197,168,128,0.2); }
 
-        /* Sleek Catalogue Horizonal Scroll */
-        .catalogue-section { padding: 12px 20px 12px; }
-        .category-label { font-size: 13px; font-weight: 600; color: #718096; margin-bottom: 10px; display: block; }
-        .image-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
-        .image-scroll::-webkit-scrollbar { display: none; }
+        /* Modern Grid Menu */
+        .menu-list { padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .menu-item { background: #0b0c10; border: 1px solid #1f2833; border-radius: 15px; padding: 16px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .menu-item.selected-menu { border-color: #c5a880; background: rgba(197,168,128,0.08); box-shadow: 0 4px 15px rgba(197,168,128,0.2); }
+        .menu-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+        .menu-name { font-size: 14px; font-weight: 600; color: #ffffff; display: block; margin-bottom: 8px; }
+        .menu-status { font-size: 11px; color: #c5a880; background: rgba(197,168,128,0.1); padding: 4px 10px; border-radius: 20px; display: inline-block; font-weight: 600; }
+
+        /* Luxury Catalogue Grid */
+        .catalogue-section { padding: 0 20px 10px; }
+        .category-label { font-size: 13px; font-weight: 600; color: #66788f; margin-bottom: 12px; display: block; }
+        .image-scroll { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
-        .crop-box { width: 115px; height: 145px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid #e2e8f0; position: relative; cursor: pointer; }
+        .crop-box { height: 180px; border-radius: 16px; overflow: hidden; border: 2px solid #0b0c10; position: relative; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .crop-box img { width: 100%; height: 100%; object-fit: cover; }
-        .crop-box.selected-img { border-color: #1a1a1a; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .style-tag { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); color: #ffffff; font-size: 11px; text-align: center; padding: 15px 8px 6px; font-weight: 500; }
+        .crop-box.selected-img { border-color: #c5a880; transform: scale(0.96); box-shadow: 0 0 15px rgba(197,168,128,0.4); }
+        .style-tag { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, #0b0c10); color: #ffffff; font-size: 12px; text-align: center; padding: 25px 10px 10px; font-weight: 600; letter-spacing: 0.5px; }
 
-        .booking-form { padding: 8px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
+        /* Premium Form Block */
+        .booking-form { padding: 10px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
         .input-group { display: flex; flex-direction: column; gap: 6px; }
-        .input-group label { font-size: 13px; color: #4a5568; font-weight: 600; }
-        .input-group input { padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; outline: none; background: #ffffff; }
-        .input-group input:focus { border-color: #1a1a1a; }
+        .input-group label { font-size: 13px; color: #66788f; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-group input { padding: 14px; border: 1px solid #0b0c10; border-radius: 12px; font-size: 14px; outline: none; background: #0b0c10; color: #ffffff; transition: 0.3s; }
+        .input-group input:focus { border-color: #c5a880; }
         
-        .contact-note { padding: 14px 16px; font-size: 12px; color: #4a5568; line-height: 1.5; background: #f7f9fa; margin: 16px 20px; border-radius: 10px; border-left: 3px solid #1a1a1a; }
-        .btn-submit { background: #1a1a1a; color: #ffffff; border: none; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; text-align: center; width: 100%; }
+        .contact-note { padding: 15px; font-size: 12px; color: #66788f; line-height: 1.6; background: #0b0c10; margin: 20px; border-radius: 12px; border-left: 3px solid #c5a880; }
+        
+        .btn-submit { background: linear-gradient(135deg, #c5a880, #e5cfa1); color: #0b0c10; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 15px; text-align: center; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(197,168,128,0.3); width: 100%; }
 
         .rtl { direction: rtl; text-align: right; }
-        .rtl .contact-note { border-left: none; border-right: 3px solid #1a1a1a; }
+        .rtl .contact-note { border-left: none; border-right: 3px solid #c5a880; }
         .rtl .lang-bar { justify-content: flex-start; }
+        .rtl .section-title::after { display: none; }
+        .rtl .section-title::before { content: ''; flex: 1; height: 1px; background: rgba(197,168,128,0.2); }
     </style>
 </head>
 <body>
@@ -67,7 +74,7 @@
     </div>
 
     <div class="header">
-        <h1>HC Barber Services</h1>
+        <h1>HC Barber</h1>
         <p id="tagline">Premium Haircut & Grooming at Your Doorstep</p>
     </div>
 
@@ -75,32 +82,34 @@
         <input type="text" id="searchInput" class="search-input" placeholder="Search styles (Fade, Kids, Beard...)" onkeyup="filterStyles()">
     </div>
 
-    <!-- Main Service Menu Items Added -->
-    <div class="section-title" id="titleMenu">Barber Services Menu</div>
+    <div class="section-title" id="titleMenu">Select Services</div>
     <div class="menu-list">
-        <div class="menu-item" onclick="toggleMenuService(this, 'Men\'s Haircut', 'مردوں کی کٹنگ')">
-            <div class="menu-item-info"><span class="menu-icon">👨</span><span class="menu-name" id="m1">Men's Haircut</span></div>
+        <div class="menu-item" onclick="toggleMenuService(this, 'Men\'s Haircut', 'مردوں کی کٹنگ', 1)">
+            <span class="menu-icon">👨</span>
+            <span class="menu-name" id="m1">Men's Haircut</span>
             <div class="menu-status" id="ms1">Select</div>
         </div>
-        <div class="menu-item" onclick="toggleMenuService(this, 'Kids\' Haircut', 'بچوں کی کٹنگ')">
-            <div class="menu-item-info"><span class="menu-icon">👦</span><span class="menu-name" id="m2">Kids' Haircut</span></div>
+        <div class="menu-item" onclick="toggleMenuService(this, 'Kids\' Haircut', 'بچوں کی کٹنگ', 2)">
+            <span class="menu-icon">👦</span>
+            <span class="menu-name" id="m2">Kids' Haircut</span>
             <div class="menu-status" id="ms2">Select</div>
         </div>
-        <div class="menu-item" onclick="toggleMenuService(this, 'Senior Haircut', 'بزرگوں کی کٹنگ')">
-            <div class="menu-item-info"><span class="menu-icon">👴</span><span class="menu-name" id="m3">Senior Haircut</span></div>
+        <div class="menu-item" onclick="toggleMenuService(this, 'Senior Haircut', 'بزرگوں کی کٹنگ', 3)">
+            <span class="menu-icon">👴</span>
+            <span class="menu-name" id="m3">Senior Haircut</span>
             <div class="menu-status" id="ms3">Select</div>
         </div>
-        <div class="menu-item" onclick="toggleMenuService(this, 'Beard Grooming / Khat', 'خط / داڑھی ڈیزائننگ')">
-            <div class="menu-item-info"><span class="menu-icon">🪒</span><span class="menu-name" id="m4">Beard Grooming</span></div>
+        <div class="menu-item" onclick="toggleMenuService(this, 'Beard Grooming / Khat', 'خط / داڑھی ڈیزائننگ', 4)">
+            <span class="menu-icon">🪒</span>
+            <span class="menu-name" id="m4">Beard Grooming</span>
             <div class="menu-status" id="ms4">Select</div>
         </div>
     </div>
 
-    <div class="section-title" id="titleCatalogue">Trending Look Catalogue</div>
+    <div class="section-title" id="titleCatalogue">Trending Catalogue</div>
     
-    <!-- Men Section -->
     <div class="catalogue-section card-item" data-name="men taper fade side part classic buzz cut">
-        <span class="category-label" id="catMen">Men's Trending Styles</span>
+        <span class="category-label" id="catMen">Men's Style Gallery</span>
         <div class="image-scroll">
             <div class="crop-box" onclick="selectStyle(this, 'Men Taper Fade')">
                 <img src="https://pexels.com" alt="Fade">
@@ -113,37 +122,11 @@
         </div>
     </div>
 
-    <!-- Kids Section -->
-    <div class="catalogue-section card-item" data-name="kids crew cut spiky hair">
-        <span class="category-label" id="catKids">Kids' Popular Styles</span>
-        <div class="image-scroll">
-            <div class="crop-box" onclick="selectStyle(this, 'Kids Crew Cut')">
-                <img src="https://pexels.com" style="display:none;" onerror="this.src='https://pexels.com'; this.style.display='block';">
-                <div class="style-tag">Crew Cut</div>
-            </div>
-            <div class="crop-box" onclick="selectStyle(this, 'Kids Spiky Hair')">
-                <img src="https://pexels.com" alt="Spiky">
-                <div class="style-tag">Spiky Cut</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seniors Section -->
-    <div class="catalogue-section card-item" data-name="senior citizen classic scissor cut decent short">
-        <span class="category-label" id="catSeniors">Senior Citizens' Decent Styles</span>
-        <div class="image-scroll">
-            <div class="crop-box" onclick="selectStyle(this, 'Senior Classic Scissor Cut')">
-                <img src="https://pexels.com" alt="Classic">
-                <div class="style-tag">Classic Scissors</div>
-            </div>
-        </div>
-    </div>
-
     <div class="contact-note" id="noteText">
         📢 <strong>Note:</strong> Prices are shared on WhatsApp chat based on your location and exact requirement.
     </div>
 
-    <div class="section-title" id="titleBooking">Book Your Home Visit</div>
+    <div class="section-title" id="titleBooking">Secure Booking</div>
     <form class="booking-form" id="appointmentForm" onsubmit="handleBooking(event)">
         <div class="input-group">
             <label id="lblName">Your Full Name</label>
@@ -156,4 +139,30 @@
         <div class="input-group">
             <label id="lblAddress">Home Address</label>
             <input type="text" id="custAddress" required>
+        </div>
+        <div class="input-group">
+            <label id="lblDate">Preferred Date</label>
+            <input type="date" id="bookDate" required>
+        </div>
+        <div class="input-group">
+            <label id="lblTime">Preferred Time</label>
+            <input type="time" id="bookTime" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btnBook">Confirm via WhatsApp</button>
+    </form>
+</div>
+
+<script>
+    let currentLang = 'en';
+    let selectedMenuServices = [];
+    let selectedStyles = [];
+
+    const translations = {
+        en: {
+            tagline: "Premium Haircut & Grooming at Your Doorstep",
+            placeholder: "Search styles (Fade, Kids, Beard...)",
+            titleMenu: "Select Services",
+            titleCatalogue: "Trending Catalogue",
+            m1: "Men's Haircut", m2: "Kids' Haircut", m3: "Senior Haircut", m4: "Beard Grooming",
             
