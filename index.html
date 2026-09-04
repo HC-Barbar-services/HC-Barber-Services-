@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HC Barber Services</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f7f9fa; color: #1a1a1a; display: flex; justify-content: center; }
+        
+        /* Premium Minimalist Container */
+        .phone-container { width: 100%; max-width: 412px; background: #ffffff; min-height: 100vh; box-shadow: 0 4px 30px rgba(0,0,0,0.05); padding-bottom: 40px; position: relative; }
+        
+        /* Minimal Language Bar */
+        .lang-bar { display: flex; justify-content: flex-end; padding: 12px 20px; background: #ffffff; gap: 8px; border-bottom: 1px solid #f0f2f5; }
+        .lang-btn { background: transparent; color: #718096; border: 1px solid #e2e8f0; padding: 4px 12px; border-radius: 20px; font-weight: 500; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+        .lang-btn.active { background: #1a1a1a; color: #ffffff; border-color: #1a1a1a; }
+
+        /* Clean Header */
+        .header { background: #ffffff; padding: 24px 20px 16px; border-bottom: 1px solid #f0f2f5; }
+        .header h1 { font-size: 24px; color: #1a1a1a; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
+        .header p { font-size: 13px; color: #718096; line-height: 1.4; }
+        
+        /* Modern Search Bar Section */
+        .search-container { padding: 16px 20px 8px; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-input { width: 100%; padding: 12px 16px; background: #f4f6f8; border: 1px solid transparent; border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; color: #1a1a1a; }
+        .search-input:focus { background: #ffffff; border-color: #1a1a1a; box-shadow: 0 0 0 3px rgba(0,0,0,0.03); }
+        .search-input::placeholder { color: #a0aec0; }
+        
+        .section-title { padding: 24px 20px 12px; font-size: 16px; color: #1a1a1a; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Sleek Catalogue */
+        .catalogue-section { padding: 0 20px 12px; }
+        .category-label { font-size: 13px; font-weight: 600; color: #718096; margin-bottom: 10px; display: block; }
+        .image-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+        .image-scroll::-webkit-scrollbar { display: none; }
+        
+        .crop-box { width: 115px; height: 145px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid #e2e8f0; position: relative; cursor: pointer; transition: all 0.2s; }
+        .crop-box img { width: 100%; height: 100%; object-fit: cover; }
+        .crop-box.selected-img { border-color: #1a1a1a; transform: scale(0.97); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        
+        .style-tag { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: #ffffff; font-size: 11px; text-align: center; padding: 12px 8px 6px; font-weight: 500; }
+
+        /* Elegant Form */
+        .booking-form { padding: 8px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
+        .input-group { display: flex; flex-direction: column; gap: 6px; }
+        .input-group label { font-size: 13px; color: #4a5568; font-weight: 600; }
+        .input-group input { padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; background: #ffffff; color: #1a1a1a; }
+        .input-group input:focus { border-color: #1a1a1a; }
+        
+        .contact-note { padding: 14px 16px; font-size: 12px; color: #4a5568; line-height: 1.5; background: #f7f9fa; margin: 16px 20px; border-radius: 10px; border-left: 3px solid #1a1a1a; }
+        
+        .btn-submit { background: #1a1a1a; color: #ffffff; border: none; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: all 0.2s; text-align: center; width: 100%; }
+        .btn-submit:hover { background: #2d3748; }
+
+        /* RTL Styles for Urdu */
+        .rtl { direction: rtl; text-align: right; }
+        .rtl .contact-note { border-left: none; border-right: 3px solid #1a1a1a; }
+        .rtl .lang-bar { justify-content: flex-start; }
+    </style>
+</head>
+<body>
+
+<div class="phone-container" id="appContainer">
+    <!-- Language Selection -->
+    <div class="lang-bar">
+        <button class="lang-btn active" id="btnEn" onclick="setLanguage('en')">English</button>
+        <button class="lang-btn" id="btnUr" onclick="setLanguage('ur')">اردو</button>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>HC Barber Services</h1>
+        <p id="tagline">Premium Haircut & Grooming at Your Doorstep</p>
+    </div>
+
+    <!-- Professional Search Bar -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search styles (Fade, Kids, Senior...)" onkeyup="filterStyles()">
+        </div>
+    </div>
+
+    <div class="section-title" id="titleCatalogue">Trending Haircuts</div>
+    
+    <!-- Men Section -->
+    <div class="catalogue-section card-item" data-name="men taper fade side part classic buzz cut">
+        <span class="category-label" id="catMen">Men's Trending Styles</span>
+        <div class="image-scroll">
+            <div class="crop-box" onclick="selectStyle(this, 'Men Taper Fade')">
+                <img src="https://unsplash.com" alt="Fade">
+                <div class="style-tag">Taper Fade</div>
+            </div>
+            <div class="crop-box" onclick="selectStyle(this, 'Men Side Part')">
+                <img src="https://unsplash.com" alt="Side Part">
+                <div class="style-tag">Side Part</div>
+            </div>
+            <div class="crop-box" onclick="selectStyle(this, 'Classic Buzz Cut')">
+                <img src="https://unsplash.com" alt="Buzz">
+                <div class="style-tag">Buzz Cut</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kids Section -->
+    <div class="catalogue-section card-item" data-name="kids crew cut spiky hair बच्चों की کٹنگ">
+        <span class="category-label" id="catKids">Kids' Popular Styles</span>
+        <div class="image-scroll">
+            <div class="crop-box" onclick="selectStyle(this, 'Kids Crew Cut')">
+                <img src="https://unsplash.com" alt="Crew">
+                <div class="style-tag">Crew Cut</div>
+            </div>
+            <div class="crop-box" onclick="selectStyle(this, 'Kids Spiky Hair')">
+                <img src="https://unsplash.com" alt="Spiky">
+                <div class="style-tag">Spiky Cut</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seniors Section -->
+    <div class="catalogue-section card-item" data-name="senior citizen classic scissor cut decent short बुजुर्गوں">
+        <span class="category-label" id="catSeniors">Senior Citizens' Decent Styles</span>
+        <div class="image-scroll">
+            <div class="crop-box" onclick="selectStyle(this, 'Senior Classic Scissor Cut')">
+                <img src="https://unsplash.com" alt="Classic">
+                <div class="style-tag">Classic Scissors</div>
+            </div>
+            <div class="crop-box" onclick="selectStyle(this, 'Senior Short Slit')">
+                <img src="https://unsplash.com" alt="Decent">
+                <div class="style-tag">Decent Short</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-note" id="noteText">
+        📢 <strong>Note:</strong> Prices are shared on WhatsApp chat based on your location and exact requirement.
+    </div>
+
+    <div class="section-title" id="titleBooking">Book Your Home Visit</div>
+    <form class="booking-form" id="appointmentForm" onsubmit="handleBooking(event)">
+        <div class="input-group">
+            <label id="lblName">Your Full Name</label>
+            <input type="text" id="custName" required>
+        </div>
+        <div class="input-group">
+            <label id="lblPhone">Mobile Number</label>
+            <input type="tel" id="custPhone" placeholder="03xx-xxxxxxx" required>
+        </div>
+        <div class="input-group">
+            <label id="lblAddress">Home Address</label>
+            <input type="text" id="custAddress" required>
+        </div>
+        <div class="input-group">
+            <label id="lblDate">Preferred Date</label>
+            <input type="date" id="bookDate" required>
+        </div>
+        <div class="input-group">
+            <label id="lblTime">Preferred Time</label>
+            <input type="time" id="bookTime" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btnBook">Book via WhatsApp</button>
+    </form>
+</div>
+
+<script>
+    let currentLang = 'en';
+    let selectedStyles = [];
+
+    const translations = {
+        en: {
+            tagline: "Premium Haircut & Grooming at Your Doorstep",
+            placeholder: "Search styles (Fade, Kids, Senior...)",
+            titleCatalogue: "Trending Haircuts",
+            catMen: "Men's Trending Styles",
+            catKids: "Kids' Popular Styles",
+            catSeniors: "Senior Citizens' Decent Styles",
+            titleBooking: "Book Your Home Visit",
+            note: "📢 <strong>Note:</strong> Prices are shared on WhatsApp chat based on your location and exact requirement.",
+  
