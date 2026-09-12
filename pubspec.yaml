@@ -1,0 +1,215 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const HCBarberApp());
+}
+
+class HCBarberApp extends StatelessWidget {
+  const HCBarberApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'HC Barber Services',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFFD4AF37),
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        colorScheme: const ColorScheme.dark(
+          primary: Color(0xFFD4AF37),
+          secondary: Color(0xFFC5A028),
+        ),
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isLoggedIn = false;
+  String selectedArea = 'DHA';
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = const TimeOfDay(hour: 10, minute: 0);
+  String selectedPayment = 'JazzCash';
+
+  final List<Map<String, String>> haircutDesigns = [
+    {'title': 'Premium Fade', 'image': 'https://unsplash.com'},
+    {'title': 'Classic Pompadour', 'image': 'https://unsplash.com'},
+    {'title': 'Beard Grooming', 'image': 'https://unsplash.com'},
+    {'title': 'Senior Care Cut', 'image': 'https://unsplash.com'},
+  ];
+
+  void _showChatBot() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF1E1E1E),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            top: 20,
+            left: 20,
+            right: 20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    '🤖 HC Assistant Chatbot',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFD4AF37)),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const Divider(color: Colors.grey),
+              SizedBox(
+                height: 200,
+                child: ListView(
+                  children: const [
+                    ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Color(0xFFD4AF37),
+                        child: Text('AI', style: TextStyle(color: Colors.black)),
+                      ),
+                      title: Text('Assalam-o-Alaikum! Main aapki kya madad kar sakta hoon?'),
+                    ),
+                  ],
+                ),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Apna sawal likhein...',
+                  suffixIcon: const Icon(Icons.send, color: Color(0xFFD4AF37)),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showBookingDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1E1E1E),
+        title: const Text('Confirm Booking', style: TextStyle(color: Color(0xFFD4AF37))),
+        content: Text('Kya aap $selectedArea ke liye $selectedPayment ke zariye booking confirm karna chahte hain?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel', style: TextStyle(color: Colors.red)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD4AF37)),
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('🎉 Booking Confirmed! HC Barber jald pahuchega.')),
+              );
+            },
+            child: const Text('Confirm', style: TextStyle(color: Colors.black)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('HC BARBER SERVICES', style: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold, fontSize: 16)),
+        centerTitle: true,
+        backgroundColor: const Color(0xFF1A1A1A),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFD4AF37), width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color(0xFF1A1A1A),
+                ),
+                child: const Text(
+                  '🏠 Salon Ki Lambi Lines Se Tang Hain?\nAb HC Barber Services Ayega Aapke Ghar!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color(0xFF1E1E1E),
+                  prefixIcon: const Icon(Icons.search, color: Color(0xFFD4AF37)),
+                  hintText: 'Search services...',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                ),
+              ),
+              const SizedBox(height: 25),
+              DropdownButtonFormField<String>(
+                value: selectedArea,
+                dropdownColor: const Color(0xFF1E1E1E),
+                decoration: InputDecoration(labelText: 'Select Area', border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                items: ['DHA', 'Clifton', 'Gulshan'].map((area) => DropdownMenuItem(value: area, child: Text(area))).toList(),
+                onChanged: (val) => setState(() => selectedArea = val!),
+              ),
+              const SizedBox(height: 15),
+              DropdownButtonFormField<String>(
+                value: selectedPayment,
+                dropdownColor: const Color(0xFF1E1E1E),
+                decoration: InputDecoration(labelText: 'Payment Method', border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                items: ['JazzCash', 'EasyPaisa', 'Cash'].map((method) => DropdownMenuItem(value: method, child: Text(method))).toList(),
+                onChanged: (val) => setState(() => selectedPayment = val!),
+              ),
+              const SizedBox(height: 25),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD4AF37)),
+                  onPressed: _showBookingDialog,
+                  child: const Text('Book Now 🗓️', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFD4AF37),
+        onPressed: _showChatBot,
+        child: const Icon(Icons.android, color: Colors.black),
+      ),
+    );
+  }
+}
